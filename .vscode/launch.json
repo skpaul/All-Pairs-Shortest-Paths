@@ -12,9 +12,9 @@
         },
         {
             "type": "java",
-            "name": "Debug (Launch)-AllPairShortestPath<All-Pairs-Shortest-Paths_5108fd1d>",
+            "name": "Debug (Launch)-Main<All-Pairs-Shortest-Paths_5108fd1d>",
             "request": "launch",
-            "mainClass": "sanfoundry.AllPairShortestPath",
+            "mainClass": "Main",
             "projectName": "All-Pairs-Shortest-Paths_5108fd1d"
         }
     ]
