@@ -23,18 +23,7 @@ public class Main
 		   }
 
 			System.out.println("Graph:");
-			// // add Edges
-			// g.addEdge(0, 1, 5.2f);
-			// g.addEdge(0, 2, 10.3f);
-			// g.addEdge(0, 3, 12.8f);
-			// g.addEdge(1, 3, 7.4f);
-			// g.addEdge(1, 4, 16.2f);
-			// g.addEdge(2, 1, 1.4f);
-			// g.addEdge(2, 3, 2.3f);
-			// g.addEdge(3, 4, 8.5f);
-			// g.addEdge(4, 2, 2.7f);
-			// g.addEdge(4, 1, 13.7f);
-
+		
 			// print Graph
 			g.printGraph();
 
@@ -86,7 +75,13 @@ public class Main
 				if (dist[i][j] == Float.MAX_VALUE)
 					System.out.print("INF ");
 				else
-					System.out.print(dist[i][j] + "   ");
+					{
+						int val = (int)dist[i][j];
+						System.out.print(val + "   ");
+
+						// System.out.print(dist[i][j] + "   ");
+					}
+				
 			}
 			System.out.println();
 		}
