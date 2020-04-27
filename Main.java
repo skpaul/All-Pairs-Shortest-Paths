@@ -23,12 +23,16 @@ public class Main
 		   }
 
 			System.out.println("Graph:");
-		
+			System.out.println("----------------------------------------------");
 			// print Graph
-			g.printGraph();
+			//g.printGraph();
+
+			g.printGraph(districtList);
 
 			// Floyd-Warshall All Pair Shortest Path Algorithm
 			System.out.println("Floyd-Warshall All Pair Shortest Path Matrix:");
+			System.out.println("----------------------------------------------");
+
 			FloydWarshall(g);
 
 			System.out.println("Good Bye");

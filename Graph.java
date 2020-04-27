@@ -61,4 +61,31 @@ public class Graph {
 			System.out.println();
 		}
 	}
+
+	public void printGraph(List<Vertex> vertexes) {
+		for (int i = 0; i < vCount; i++) {
+			List<Integer> edges = neighbours(i);
+			Vertex startVertex = find(i, vertexes);
+			System.out.print(startVertex.getName() + ": ");
+
+			// System.out.print(i + ": ");
+			for (int j = 0; j < edges.size(); j++) {
+				Vertex destVertex = find(edges.get(j), vertexes);
+				System.out.print(destVertex.getName() + " ");
+				
+				//System.out.print(edges.get(j) + " ");
+			}
+			System.out.println();
+		}
+	}
+
+	private Vertex find(Integer id, List<Vertex> districts ){
+		for (Vertex dist : districts) {
+            Integer nn = dist.getId();
+				if (nn == id) {
+					return dist;
+				}
+        }
+		throw new RuntimeException("Should not happen");		
+	}
 }
