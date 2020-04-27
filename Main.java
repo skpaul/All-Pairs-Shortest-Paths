@@ -33,6 +33,7 @@ public class Main
 			System.out.println("Floyd-Warshall All Pair Shortest Path Matrix:");
 			System.out.println("----------------------------------------------");
 
+			g.FloydWarshell(g.getAdj(), g.getvCount());
 			FloydWarshall(g);
 
 			System.out.println("Good Bye");
