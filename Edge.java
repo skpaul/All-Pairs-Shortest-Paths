@@ -3,9 +3,9 @@ public class Edge  {
     private final Integer id; //actuallly this is index 
     private final Vertex source;
     private final Vertex destination;
-    private final int weight;
+    private final Float weight;
 
-    public Edge(Integer id, Vertex source, Vertex destination, int weight) {
+    public Edge(Integer id, Vertex source, Vertex destination, Float weight) {
         this.id = id;
         this.source = source;
         this.destination = destination;
@@ -22,7 +22,7 @@ public class Edge  {
     public Vertex getSource() {
         return source;
     }
-    public int getWeight() {
+    public Float getWeight() {
         return weight;
     }
 

@@ -5,26 +5,105 @@ import java.util.Scanner;
 public class Main
 {
 	public static void main(String[] args) {
-	    
 		try {
 			Scanner scan = new Scanner(System.in);
-
 			List<Vertex> districtList  = new ArrayList<>();
 			districtList = enterDistrict(districtList, scan);
 
-			List<Edge> roadList  = new ArrayList<>();
-			roadList = enterRoad(roadList, districtList, scan);
+			int vCount = districtList.size();
+			Graph g = new Graph(vCount);
+		
+			List<Edge> edgeList  = new ArrayList<>();
+			edgeList = enterRoad(edgeList, districtList, scan);
+
+			for (Edge edge : edgeList) {
+				Vertex source = edge.getSource();
+				Vertex dest = edge.getDestination();
+				g.addEdge(source.getId(), dest.getId(), edge.getWeight());
+		   }
+
+			System.out.println("Graph:");
+			// // add Edges
+			// g.addEdge(0, 1, 5.2f);
+			// g.addEdge(0, 2, 10.3f);
+			// g.addEdge(0, 3, 12.8f);
+			// g.addEdge(1, 3, 7.4f);
+			// g.addEdge(1, 4, 16.2f);
+			// g.addEdge(2, 1, 1.4f);
+			// g.addEdge(2, 3, 2.3f);
+			// g.addEdge(3, 4, 8.5f);
+			// g.addEdge(4, 2, 2.7f);
+			// g.addEdge(4, 1, 13.7f);
+
+			// print Graph
+			g.printGraph();
+
+			// Floyd-Warshall All Pair Shortest Path Algorithm
+			System.out.println("Floyd-Warshall All Pair Shortest Path Matrix:");
+			FloydWarshall(g);
 
 			System.out.println("Good Bye");
-			System.out.println("Good Bye");
 
-			scan.close();
+		 	scan.close();
 		 
 		 } catch(Exception e) {
 			 System.out.println(e.getMessage());
 		 }
 	}
 	
+	public static void FloydWarshall(Graph g) {
+		int V = g.getvCount();
+		
+		// to store the calculated distances
+		float dist[][] = new float[V][V];
+
+		// initialize with adjacency matrix weight values
+		for (int i = 0; i < V; i++) {
+			for (int j = 0; j < V; j++) {
+				dist[i][j] = g.getAdj()[i][j];
+			}
+		}
+
+		// loop through all vertices one by one
+		for (int k = 0; k < V; k++) {
+			// pick all as source
+			for (int i = 0; i < V; i++) {
+				// pick all as destination
+				for (int j = 0; j < V; j++) {
+					// If k is on the shortest path from i to j
+					if (dist[i][k] + dist[k][j] < dist[i][j]) {
+						// update the value of dist[i][j]
+						dist[i][j] = dist[i][k] + dist[k][j];
+					}
+				}
+			}
+		}
+		
+		// shortest path matrix
+		for (int i = 0; i < V; i++) {
+			for (int j = 0; j < V; j++) {
+				// if value is infinity
+				if (dist[i][j] == Float.MAX_VALUE)
+					System.out.print("INF ");
+				else
+					System.out.print(dist[i][j] + "   ");
+			}
+			System.out.println();
+		}
+		
+	}
+
+
+	static Float[][] addEdge(List<Edge> edgeList, Float[][] adj) {
+
+		for (Edge edge : edgeList) {
+			 Vertex source = edge.getSource();
+			 Vertex dest = edge.getDestination();
+			 adj[source.getId()][dest.getId()] = edge.getWeight();
+        }
+
+		return adj;
+	}
 
 	static List<Vertex> enterDistrict(List<Vertex> existingList, Scanner scan){
 		System.out.println("------------------------------------------------------------------------");
@@ -70,8 +149,7 @@ public class Main
 	static List<Edge> enterRoad(List<Edge> existingRoads, List<Vertex> districts, Scanner scan){
 		Integer counter = existingRoads.size() + 1;
 		System.out.println("------------------------------------------------------------------------");
-		System.out.println("Enter road#"+ counter +": start, end, distance   [N = No] ...");
-		System.out.println("i.e. dhaka, rajshahi, 3");
+		System.out.println("Enter Edge#"+ counter +": start, end, distance   [N = No] ...");
 		System.out.println("------------------------------------------------------------------------");
 
 		String roadDetails = scan.next();
@@ -90,7 +168,7 @@ public class Main
 				}
 
 				if(!isExist(origin, districts)){
-				   System.out.println("This district does not exist");
+				   System.out.println("This vertex does not exist");
 				   enterRoad(existingRoads, districts, scan);
 				}
 		   
@@ -101,14 +179,14 @@ public class Main
 					enterRoad(existingRoads, districts, scan);
 				}
 				if(!isExist(destination, districts)){
-					System.out.println("This district does not exist");
+					System.out.println("This vertex does not exist");
 					enterRoad(existingRoads, districts, scan);
 				 }
 			
 				Vertex destinationDistrict = find(destination, districts);
 
 			
-				Integer distnance = Integer.parseInt(inputArray[2]);
+				Float distnance = Float.parseFloat(inputArray[2]);
 
 				Edge newRoad = new Edge(counter, originDistrict, destinationDistrict, distnance);
 				existingRoads.add(newRoad);
